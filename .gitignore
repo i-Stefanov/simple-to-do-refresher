@@ -1,0 +1,45 @@
+# Node modules
+node_modules/
+
+# Build output (dist, build, etc.)
+dist/
+build/
+out/
+
+# SCSS compiled files (if compiled manually)
+*.css
+*.css.map
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Dependency lock files (optional based on your package manager preference)
+# Uncomment the one you don't use if needed
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Editor folders and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*.local
+
+# Cache / Temp
+.cache/
+.tmp/
+.parcel-cache/
+.next/
+.sass-cache/
+coverage/
