@@ -5,7 +5,7 @@ node_modules/
 dist/
 build/
 out/
-
+*.ch
 # SCSS compiled files (if compiled manually)
 *.css
 *.css.map

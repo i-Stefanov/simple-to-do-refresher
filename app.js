@@ -1,11 +1,18 @@
 const listsContainer = document.querySelector("[data-lists]");
 const newListForm = document.querySelector("[data-new-list-form]");
 const newListInput = document.querySelector("[data-new-list-input]");
+const deleteListBtn = document.querySelector("[data-delete-list-button]");
 
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_LIST_SELECTED_ID_KEY = "task.selectedListId";
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_LIST_SELECTED_ID_KEY);
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
+
+deleteListBtn.addEventListener("click", (e) => {
+  lists = lists.filter((list) => list.id !== selectedListId);
+  selectedListId = null;
+  saveAndRender();
+});
 
 listsContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "li") {
