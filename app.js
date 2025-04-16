@@ -139,6 +139,7 @@ function renderTasks(selectedList) {
     label.htmlFor = task.id;
     label.append(task.name);
     tasksContainer.appendChild(taskElement);
+    tasksContainer.lastElementChild.classList.add("fade-in-up");
   });
 }
 
@@ -154,6 +155,7 @@ function renderTaskCount(selectedList) {
 function renderLists() {
   lists.forEach((list) => {
     const listElement = document.createElement("li");
+    listElement.classList.add("fade-in-up");
     listElement.classList.add("list-name");
     listElement.innerText = list.name;
     listElement.dataset.listId = list.id;
