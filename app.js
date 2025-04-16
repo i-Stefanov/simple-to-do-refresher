@@ -65,6 +65,7 @@ newTaskForm.addEventListener("submit", (e) => {
   const taskName = newTaskInput.value;
   if (taskName === null || taskName === "") return;
   const task = createTask(taskName);
+  task._justCreated = true;
   newTaskInput.value = null;
   const selectedList = lists.find((list) => list.id === selectedListId);
 
@@ -83,6 +84,7 @@ function createList(name) {
     id: Date.now().toString(),
     name: name,
     tasks: [],
+    hasAnimated: false,
   };
 }
 
@@ -132,14 +134,22 @@ function renderTasks(selectedList) {
     selectedList.tasks.length === 0 ? "block" : "none";
   selectedList.tasks.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
+    const taskDiv = taskElement.querySelector(".task");
     const checkbox = taskElement.querySelector("input");
     checkbox.id = task.id;
     checkbox.checked = task.complete;
     const label = taskElement.querySelector("label");
     label.htmlFor = task.id;
     label.append(task.name);
+
+    if (task._justCreated) {
+      const taskDiv = taskElement.querySelector(".task");
+      taskDiv.classList.add("fade-in-up");
+
+      delete task._justCreated; // removing the flag after using it
+    }
+
     tasksContainer.appendChild(taskElement);
-    tasksContainer.lastElementChild.classList.add("fade-in-up");
   });
 }
 
@@ -155,8 +165,12 @@ function renderTaskCount(selectedList) {
 function renderLists() {
   lists.forEach((list) => {
     const listElement = document.createElement("li");
-    listElement.classList.add("fade-in-up");
     listElement.classList.add("list-name");
+
+    if (!list.hasAnimated) {
+      listElement.classList.add("fade-in-up");
+      list.hasAnimated = true;
+    }
     listElement.innerText = list.name;
     listElement.dataset.listId = list.id;
     if (list.id === selectedListId) {
@@ -182,4 +196,8 @@ function save() {
   localStorage.setItem(LOCAL_STORAGE_LIST_SELECTED_ID_KEY, selectedListId);
 }
 
-render();
+document.addEventListener("DOMContentLoaded", () => {
+  render();
+});
+
+// render();
