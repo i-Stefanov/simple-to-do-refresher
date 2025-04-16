@@ -32,6 +32,7 @@ deleteListBtn.addEventListener("click", (e) => {
 listsContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "li") {
     selectedListId = e.target.dataset.listId;
+
     saveAndRender();
   }
 });
@@ -54,6 +55,7 @@ newListForm.addEventListener("submit", (e) => {
   if (listName === null || listName === "") return;
   const list = createList(listName);
   lists.push(list);
+  selectedListId = list.id;
   newListInput.value = null;
   saveAndRender();
 });
@@ -65,6 +67,7 @@ newTaskForm.addEventListener("submit", (e) => {
   const task = createTask(taskName);
   newTaskInput.value = null;
   const selectedList = lists.find((list) => list.id === selectedListId);
+
   selectedList.tasks.push(task);
   saveAndRender();
 });
@@ -94,12 +97,27 @@ function createTask(name) {
 function render() {
   clearElement(listsContainer);
 
-  const selectedList = lists.find((list) => list.id == selectedListId);
-  noListsMessage.style.display = lists.length === 0 ? "block" : "none";
+  let selectedList = lists.find((list) => list.id == selectedListId);
+  // noListsMessage.style.display = lists.length === 0 ? "block" : "none";
+
+  if (lists.length === 0) {
+    noListsMessage.classList.add("visible");
+  } else {
+    noListsMessage.classList.remove("visible");
+  }
+
   renderLists();
 
-  if (!selectedList) {
+  if (!selectedList && lists.length === 0) {
     listDisplayContainer.style.display = "none";
+  } else if (!selectedList && lists.length > 0) {
+    selectedList = lists[0];
+    selectedListId = lists[0].id;
+    listDisplayContainer.style.display = "";
+    listTitleElement.innerText = selectedList.name;
+    renderTaskCount(selectedList);
+    clearElement(tasksContainer);
+    renderTasks(selectedList);
   } else {
     listDisplayContainer.style.display = "";
     listTitleElement.innerText = selectedList.name;

@@ -250,3 +250,17 @@ form {
   margin-top: 1rem;
   font-size: 0.9rem;
 }
+
+#no-lists-message {
+  @extend .empty-state;
+  opacity: 0;
+  visibility: hidden;
+  max-height: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease, max-height 0.3s ease;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    max-height: 50px; // adjust as needed
+  }
+}
