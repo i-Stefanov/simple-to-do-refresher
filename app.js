@@ -11,6 +11,11 @@ const tasksContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("task-template");
 const newTaskForm = document.querySelector("[data-new-task-form]");
 const newTaskInput = document.querySelector("[data-new-task-input]");
+const clearCompleteTasksBtn = document.querySelector(
+  "[data-clear-complete-tasks-button]"
+);
+const noListsMessage = document.getElementById("no-lists-message");
+const noTasksMessage = document.getElementById("no-tasks-message");
 
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_LIST_SELECTED_ID_KEY = "task.selectedListId";
@@ -64,6 +69,12 @@ newTaskForm.addEventListener("submit", (e) => {
   saveAndRender();
 });
 
+clearCompleteTasksBtn.addEventListener("click", (e) => {
+  const selectedList = lists.find((list) => list.id === selectedListId);
+  selectedList.tasks = selectedList.tasks.filter((task) => !task.complete);
+  saveAndRender();
+});
+
 function createList(name) {
   return {
     id: Date.now().toString(),
@@ -84,9 +95,10 @@ function render() {
   clearElement(listsContainer);
 
   const selectedList = lists.find((list) => list.id == selectedListId);
+  noListsMessage.style.display = lists.length === 0 ? "block" : "none";
   renderLists();
 
-  if (selectedListId == null) {
+  if (!selectedList) {
     listDisplayContainer.style.display = "none";
   } else {
     listDisplayContainer.style.display = "";
@@ -98,12 +110,13 @@ function render() {
 }
 
 function renderTasks(selectedList) {
-  console.log(selectedList);
+  noTasksMessage.style.display =
+    selectedList.tasks.length === 0 ? "block" : "none";
   selectedList.tasks.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
     const checkbox = taskElement.querySelector("input");
     checkbox.id = task.id;
-    checkbox.checked = taskElement.complete;
+    checkbox.checked = task.complete;
     const label = taskElement.querySelector("label");
     label.htmlFor = task.id;
     label.append(task.name);

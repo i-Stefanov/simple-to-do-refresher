@@ -11,11 +11,11 @@
     <h1 class="title">Stuff I need to do!</h1>
     <section class="all-tasks">
       <h2 class="task-list-title">My list</h2>
-      <ul class="task-list" data-lists>
-        <!-- <li class="list-name active-list">Youtube</li>
-        <li class="list-name">Work</li>
-        <li class="list-name">Grocery</li> -->
-      </ul>
+      <ul class="task-list" data-lists></ul>
+      <p id="no-lists-message" class="empty-state" style="display: none">
+        No lists yet. Create one!
+      </p>
+
       <form action="" data-new-list-form>
         <input
           type="text"
@@ -33,29 +33,10 @@
         <p class="task-count" data-list-count>3 tasks remaining</p>
       </div>
       <div class="todo-body">
-        <div class="tasks" data-tasks>
-          <div class="task">
-            <input type="checkbox" name="" id="task-1" />
-            <label for="task-1">
-              <span class="custom-checkbox"></span>
-              record todo list video</label
-            >
-          </div>
-          <div class="task">
-            <input type="checkbox" name="" id="task-2" />
-            <label for="task-2">
-              <span class="custom-checkbox"></span>
-              second task</label
-            >
-          </div>
-          <div class="task">
-            <input type="checkbox" name="" id="task-3" />
-            <label for="task-3">
-              <span class="custom-checkbox"></span>
-              third task
-            </label>
-          </div>
-        </div>
+        <div class="tasks" data-tasks></div>
+        <p id="no-tasks-message" class="empty-state" style="display: none">
+          No tasks in this list. Add one!
+        </p>
         <div class="new-task-creator">
           <form action="" data-new-task-form>
             <input
@@ -69,7 +50,9 @@
           </form>
         </div>
         <div class="delete-stuff">
-          <button class="btn delete">clear completed tasks</button>
+          <button class="btn delete" data-clear-complete-tasks-button>
+            clear completed tasks
+          </button>
           <button class="btn delete" data-delete-list-button>
             Delete list
           </button>

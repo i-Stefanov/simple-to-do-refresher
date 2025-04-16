@@ -242,3 +242,11 @@ form {
   bottom: -35px;
   color: var(--clr-light);
 }
+
+.empty-state {
+  text-align: center;
+  font-style: italic;
+  color: #999;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
